@@ -5,31 +5,41 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser } from '../features/authSlice';
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = true;
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
 
   const handleLogout = () => {
-    //* clear user data and go to login page
-    navigate('/')
-  }
+    dispatch(clearUser());
+    navigate('login');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="secondary">
+      <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 , cursor:"pointer" }} onClick={()=> navigate("/")}>
-            Clarusway News
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, cursor: 'pointer' }}
+            onClick={() => navigate('/')}
+          >
+            Koral News
           </Typography>
-
-        {user ? (
-          <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          {user ? (
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
           ) : (
-            <Button color="inherit">Login</Button>
-        ) }
-
-          <Button color="inherit" onClick={()=>navigate('/')}>Login</Button>
+            <Button color="inherit" onClick={() => navigate('/')}>
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

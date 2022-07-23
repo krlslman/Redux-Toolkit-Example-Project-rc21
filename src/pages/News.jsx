@@ -6,10 +6,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CardMedia } from '@mui/material';
 import loadingGif from '../assets/loading.gif';
+import { getNews } from '../features/newsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 const News = () => {
   const dispatch = useDispatch();
-  const {newsList} = useSelector((state) => state.news);
+  const {newsList, loading } = useSelector((state) => state.news);
+
+  useEffect(() => {
+    dispatch(getNews()); //getNews bir api isteğinde bulunuyor, bunu use efecte yaparız
+  }, []);
+  
 
   return (
     <>
